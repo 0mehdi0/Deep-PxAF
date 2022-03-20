@@ -1,25 +1,18 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT license.
+
 
 import logging
 import time
 from argparse import ArgumentParser
-
 import torch
 import torch.nn as nn
 from torch.utils.tensorboard import SummaryWriter
-
 import utils.datasets
 import utils.utils
 from utils.model import CNN
 from nni.nas.pytorch.utils import AverageMeter
 from nni.retiarii import fixed_arch
 
-logger = logging.getLogger('nni')
-
-
-
-
+logger = logging.getLogger('ECG-NAS')
 
 
 

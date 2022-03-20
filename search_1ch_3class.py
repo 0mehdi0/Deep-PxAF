@@ -1,5 +1,3 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT license.
 
 import json
 import logging
@@ -8,14 +6,13 @@ from argparse import ArgumentParser
 import utils.warmup
 import torch
 import torch.nn as nn
-# import signalprocess_1ch
 import utils.datasets
 from utils.model import CNN
 from nni.nas.pytorch.callbacks import ArchitectureCheckpoint, LRSchedulerCallback
 from utils.utils import accuracy
 
 
-logger = logging.getLogger('nni')
+logger = logging.getLogger('ECG-NAS')
 
 
 
