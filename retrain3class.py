@@ -1,5 +1,4 @@
 
-
 import logging
 import time
 from argparse import ArgumentParser
@@ -118,7 +117,6 @@ if __name__ == "__main__":
     args.batch_size=10
     print("args.batch_size=",args.batch_size)
     dataset_train, dataset_valid = utils.datasets.get_ECG_data()
-    #dataset_train, dataset_valid = datasets.get_dataset("cifar10", cutout_length=16)
 
     with fixed_arch(args.arc_checkpoint):
         model = CNN(100, 1, 36, 3, args.layers, auxiliary=True)

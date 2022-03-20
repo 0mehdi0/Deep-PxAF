@@ -58,7 +58,8 @@ def gaf_plot(s, eps=None, steps=None):
   X_gadf = gadf.fit_transform(X[0:1])
   # Show the images for the first time series
   fig = plt.figure(figsize=(8, 4))
-  grid = ImageGrid(fig, 111,nrows_ncols=(1, 2),axes_pad=0.15,share_all=True,cbar_location="right",cbar_mode="single",cbar_size="7%",cbar_pad=0.3,)
+  grid = ImageGrid(fig, 111,nrows_ncols=(1, 2),axes_pad=0.15,share_all=True,\
+                   cbar_location="right",cbar_mode="single",cbar_size="7%",cbar_pad=0.3,)
   images = [X_gasf[0], X_gadf[0]]
   titles = ['Summation', 'Difference']
   for image, title, ax in zip(images, titles, grid):
@@ -122,8 +123,10 @@ def filter_fn(data,window_len):
 
 
 
-def signal_process(signal, samples ,wavelet_name,rm_coefficients,window_len,recurrence_eps): 
-  data,coeffs2,coeffs=wavelet_fn(signal,wavelet_name,samples,rm_coefficients=rm_coefficients)
+def signal_process(signal, samples ,wavelet_name,rm_coefficients,window_len\
+                   ,recurrence_eps): 
+  data,coeffs2,coeffs=wavelet_fn(signal,wavelet_name,samples,rm_coefficients\
+                                 =rm_coefficients)
  
   data5,data6=filter_fn(data,window_len)
   rec=recurrence_fn(data6,recurrence_eps)
@@ -166,19 +169,10 @@ def index_gen(state):
      random.shuffle(addreses)
      return  addreses , 512
   elif state==2:
-    #for i in range(len(addreses1)-1):
-    #  addreses1_1[i][1]=addreses1[i][1] * addreses1[i+1][1]
-    #for i in range(len(addreses2)-1):
-    #  addreses2_1[i][1]=addreses2[i][1] * addreses2[i+1][1]
-
-   # for i in range(len(addreses3)-1):
-   #   addreses3_1[i][1]=addreses3[i][1] * addreses3[i+1][1]
     addreses=addreses1_1+addreses2_1+addreses3_1
-
     random.shuffle(addreses)
     return  addreses , 1024
 
-  return iindex
 #######################################################################################################################
 def check_nan(data):
   for i in range(100):
@@ -193,13 +187,15 @@ def check_nan(data):
 import pickle
 PATH = "./datasets/finalindex.pt"
 
-def main_fn(samples,wavelet_type,rm_coefficients,window_len,recurrence_eps,overlap,save_mode,image_size):#overlap=0.25,0.5,
-  global rec_data_seg_ch1,rec_data_seg_ch2,data_seg_ch1,data_seg_ch2,total_data,rec_total_data,labels
+def main_fn(samples,wavelet_type,rm_coefficients,window_len,recurrence_eps\
+            ,overlap,save_mode,image_size):#overlap=0.25,0.5,
+  global rec_data_seg_ch1,rec_data_seg_ch2,data_seg_ch1,data_seg_ch2,total_data\
+         ,rec_total_data,labels
   global display_data
   data_preprocess()
   rec_total_seg=[]
   data_seg_ch1=[]
-  total_data=[]   #total_data[i][j] i=caces j=sampeles slide
+  total_data=[]   #total_data[i][j] i=cases j=sampeles slide
   rec_total_data=[]
   labels=[]
   lable=0
@@ -217,14 +213,12 @@ def main_fn(samples,wavelet_type,rm_coefficients,window_len,recurrence_eps,overl
   lendata=len(addreses)  
   print(lendata)
   for index in addreses:#len(mylist)):i in range(100):#
-     #index=addreses[i]
      cofile=cofile+1
      frame_step=samples*(1-overlap)
      i,ii,iii=indextoaddres(index[0],samples,overlap)
-
-
-     #labels.append(index[1])
-     x,x,x,x,x,x,x,rec1=signal_process(mylist[i][index[2]][ii*int(frame_step):(ii)*int(frame_step)+sam],sam,wavelet_type,rm_coefficients,window_len,recurrence_eps)
+     x,x,x,x,x,x,x,rec1=signal_process(mylist[i][index[2]][ii*int(frame_step)\
+                                      :(ii)*int(frame_step)+sam],sam,wavelet_type,\
+                                       rm_coefficients,window_len,recurrence_eps)
      if check_nan(rec1) :  #check if nan is here
        pass
      else:
@@ -237,17 +231,18 @@ def main_fn(samples,wavelet_type,rm_coefficients,window_len,recurrence_eps,overl
        total_data.append(a3[0])  
    
 
-
      if cofile==int(lendata/6) :
        
        cofile=0
        print(cx)
        if cx != 6:
-         a={'len':int(len(total_data)) ,'batch_label': 'training batch '+str(cx)+' of 5', 'labels': labels, 'data': np.array([total_data])}
+         a = {'len':int(len(total_data)) ,'batch_label': 'training batch ' \
+              +str(cx)+' of 5', 'labels': labels, 'data': np.array([total_data])}
          with open('./datasets/ECG3class_1ch/data_batch_'+str(cx), 'wb') as f:
            pickle.dump(a, f)
        if cx==6 :
-         b={'len':int(len(total_data)),'batch_label': 'test batch 1 of 1', 'labels': labels, 'data': np.array([total_data])}
+         b={'len':int(len(total_data)),'batch_label': 'test batch 1 of 1',\
+            'labels': labels, 'data': np.array([total_data])}
          with open('./datasets/ECG3class_1ch/test_batch', 'wb') as f:
            pickle.dump(b, f)
          break         
