@@ -18,5 +18,5 @@ python search_1ch_3class.py
 ```
 In final step retrain the best architecture by :<br />
 ```python
-python retrain3class.py
+python retrain3class.py --arc-checkpoint checkpoint_1ch_labeled_3class_512.json
 ```
