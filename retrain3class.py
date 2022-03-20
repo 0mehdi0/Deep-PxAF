@@ -9,9 +9,9 @@ import torch
 import torch.nn as nn
 from torch.utils.tensorboard import SummaryWriter
 
-import datasets
-import utils
-from model import CNN
+import utils.datasets
+import utils.utils
+from utils.model import CNN
 from nni.nas.pytorch.utils import AverageMeter
 from nni.retiarii import fixed_arch
 
@@ -53,7 +53,7 @@ def train(config, train_loader, model, optimizer, criterion, epoch):
         nn.utils.clip_grad_norm_(model.parameters(), config.grad_clip)
         optimizer.step()
 
-        accuracy = utils.accuracy(logits, y, topk=(1, 2))
+        accuracy = utils.utils.accuracy(logits, y, topk=(1, 2))
         losses.update(loss.item(), bs)
         top1.update(accuracy["acc1"], bs)
         top5.update(accuracy["acc2"], bs)
@@ -124,7 +124,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     args.batch_size=10
     print("args.batch_size=",args.batch_size)
-    dataset_train, dataset_valid = datasets.get_ECG_data()
+    dataset_train, dataset_valid = utils.datasets.get_ECG_data()
     #dataset_train, dataset_valid = datasets.get_dataset("cifar10", cutout_length=16)
 
     with fixed_arch(args.arc_checkpoint):

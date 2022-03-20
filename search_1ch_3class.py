@@ -5,14 +5,14 @@ import json
 import logging
 import time
 from argparse import ArgumentParser
-import warmup
+import utils.warmup
 import torch
 import torch.nn as nn
-import signalprocess_1ch
-import datasets
-from model import CNN
+# import signalprocess_1ch
+import utils.datasets
+from utils.model import CNN
 from nni.nas.pytorch.callbacks import ArchitectureCheckpoint, LRSchedulerCallback
-from utils import accuracy
+from utils.utils import accuracy
 
 
 logger = logging.getLogger('nni')
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     print("args.batch_size=",args.batch_size)
-    dataset_train, dataset_valid = datasets.get_ECG_data()
+    dataset_train, dataset_valid = utils.datasets.get_ECG_data()
     #dataset_train, dataset_valid = datasets.get_dataset("cifar10")
 
     model = CNN(100, 1, args.channels, 3, args.layers)

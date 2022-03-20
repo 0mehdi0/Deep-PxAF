@@ -21,7 +21,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import ImageGrid
 from pyts.image import GramianAngularField
 
-labeled_data = pd.read_pickle('./dataset_PAF.pkl')
+labeled_data = pd.read_pickle('./datasets/dataset_PAF.pkl')
 mylist=labeled_data.values.tolist()
 
 
@@ -153,7 +153,7 @@ def indextoaddres(indexc,samples,overlap):
 
 #######################################################################################################################
 def index_gen(state):
-  PATH = "./finalindex.pt"
+  PATH = "./datasets/finalindex.pt"
   checkpoint = torch.load(PATH)
   addreses1=checkpoint['labels1'] 
   addreses2=checkpoint['labels2'] 
@@ -191,7 +191,7 @@ def check_nan(data):
 
 
 import pickle
-PATH = "./finalindex.pt"
+PATH = "./datasets/finalindex.pt"
 
 def main_fn(samples,wavelet_type,rm_coefficients,window_len,recurrence_eps,overlap,save_mode,image_size):#overlap=0.25,0.5,
   global rec_data_seg_ch1,rec_data_seg_ch2,data_seg_ch1,data_seg_ch2,total_data,rec_total_data,labels
@@ -244,11 +244,11 @@ def main_fn(samples,wavelet_type,rm_coefficients,window_len,recurrence_eps,overl
        print(cx)
        if cx != 6:
          a={'len':int(len(total_data)) ,'batch_label': 'training batch '+str(cx)+' of 5', 'labels': labels, 'data': np.array([total_data])}
-         with open('./ECGDATA_1CH/data_batch_'+str(cx), 'wb') as f:
+         with open('./datasets/ECG3class_1ch/data_batch_'+str(cx), 'wb') as f:
            pickle.dump(a, f)
        if cx==6 :
          b={'len':int(len(total_data)),'batch_label': 'test batch 1 of 1', 'labels': labels, 'data': np.array([total_data])}
-         with open('./ECGDATA_1CH/test_batch', 'wb') as f:
+         with open('./datasets/ECG3class_1ch/test_batch', 'wb') as f:
            pickle.dump(b, f)
          break         
        labels=[]
