@@ -3,7 +3,7 @@ ECG-NAS
 
 
 Firstly you should download dataset_PAF.pkl from [link](https://drive.google.com/file/d/1G5uFIGllmJIk05G1Acp2IItjK159XQhC/view?usp=sharing) 
-then move it to datasets folder and install requirements by run :.<br />
+then move it to datasets folder.<br /> And then install requirements by run : .<br />
 ```pyhton
 pip install -r requirements.txt
 ```
