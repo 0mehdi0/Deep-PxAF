@@ -1,5 +1,6 @@
 
 import logging
+from tarfile import LENGTH_NAME
 import time
 from argparse import ArgumentParser
 import torch
@@ -10,12 +11,14 @@ import utils.utils
 from utils.model import CNN
 from nni.nas.pytorch.utils import AverageMeter
 from nni.retiarii import fixed_arch
+import random
+
 
 logger = logging.getLogger('ECG-NAS')
 
 
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device =torch.device("cuda" if torch.cuda.is_available() else "cpu")
 writer = SummaryWriter()
 
 
@@ -80,7 +83,7 @@ def validate(config, valid_loader, model, criterion, epoch, cur_step):
             logits = model(X)
             loss = criterion(logits, y)
 
-            accuracy = utils.accuracy(logits, y, topk=(1, 2))
+            accuracy = utils.utils.accuracy(logits, y, topk=(1, 2))
             losses.update(loss.item(), bs)
             top1.update(accuracy["acc1"], bs)
             top5.update(accuracy["acc2"], bs)
@@ -109,17 +112,25 @@ if __name__ == "__main__":
     parser.add_argument("--epochs", default=200, type=int)
     parser.add_argument("--aux-weight", default=0.4, type=float)
     parser.add_argument("--drop-path-prob", default=0.2, type=float)
+    parser.add_argument("--GAN_flag", default=1, type=int)
+    parser.add_argument("--seed", default=100, type=int)
     parser.add_argument("--workers", default=4)
     parser.add_argument("--grad-clip", default=5., type=float)
-    parser.add_argument("--arc-checkpoint", default="/home/xun/code/git/ECG-NAS/examples/nas/oneshot/darts/checkpoint_1ch_labeled_3class.json")
+    parser.add_argument("--arc-checkpoint", default="./checkpoint_1ch_labeled_3class.json")
 
     args = parser.parse_args()
     args.batch_size=10
     print("args.batch_size=",args.batch_size)
-    dataset_train, dataset_valid = utils.datasets.get_ECG_data()
 
+    GAN_flag = args.GAN_flag
+    seed = args.seed
+    dataset_train, dataset_valid, dataset_test = utils.datasets.get_ECG_data(seed, GAN_flag)
+
+    print("len(dataset_train):",len(dataset_train),"len(dataset_valid):"
+    			,len(dataset_valid),"len(dataset_test):",len(dataset_test))
+    
     with fixed_arch(args.arc_checkpoint):
-        model = CNN(100, 1, 36, 3, args.layers, auxiliary=True)
+        model = CNN(100, 1, 36, 2, args.layers, auxiliary=True)
     criterion = nn.CrossEntropyLoss()
     print("test1")
     model.to(device)
@@ -150,6 +161,18 @@ if __name__ == "__main__":
         # validation
         cur_step = (epoch + 1) * len(train_loader)
         top1 = validate(args, valid_loader, model, criterion, epoch, cur_step)
+        if best_top1<top1:
+            EPOCH = epoch
+            PATH = "best_top.pt"
+            LOSS = 0.4
+            logger.info("Final best Prec@1 = {:.4%}".format(best_top1))
+            torch.save({
+                        'epoch': EPOCH,
+                        'model_state_dict': model.state_dict(),
+                        'optimizer_state_dict': optimizer.state_dict(),
+                        'loss': LOSS,
+                        }, PATH)  
+
         best_top1 = max(best_top1, top1)
         lr_scheduler.step()
 
@@ -163,4 +186,5 @@ if __name__ == "__main__":
                 'optimizer_state_dict': optimizer.state_dict(),
                 'loss': LOSS,
                 }, PATH)  
+
 

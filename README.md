@@ -2,8 +2,8 @@
 NAS-PxAF
 
 
-First, you need to download the datasets (PxAF.pkl): [link](https://drive.google.com/file/d/1G5uFIGllmJIk05G1Acp2IItjK159XQhC/view?usp=sharing) 
-Next, move it to the datasets folder.<br /> .Then, install requirements by running: <br />
+First, you need to download the datasets (PxAF.pkl): [link](https://drive.google.com/file/d/1G5uFIGllmJIk05G1Acp2IItjK159XQhC/view?usp=sharing) , (Selected_GAN.pt): [link](https://drive.google.com/file/d/1j1wuQjeUR02wKyAllhOwo_dE0MjF0Oop/view?usp=sharing) , (Selected_PAF.csv): [link](https://drive.google.com/file/d/1vAn5PieATTsYW7TCHYrU38zWtpIPc8R9/view?usp=sharing) and (GAN_Data.pt): [link](https://drive.google.com/file/d/1-Tz5bikmHLaK8ds2r8D1Uzlw89XMD-pW/view?usp=sharing)
+Next, move them to the datasets folder.<br /> .Then, install requirements by running: <br />
 ```pyhton
 pip install -r requirements.txt
 ```

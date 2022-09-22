@@ -1,43 +1,46 @@
-
 import json
-import logging
 import time
-from argparse import ArgumentParser
-import utils.warmup
 import torch
+import logging
+import utils.warmup
 import torch.nn as nn
 import utils.datasets
 from utils.model import CNN
-from nni.nas.pytorch.callbacks import ArchitectureCheckpoint, LRSchedulerCallback
 from utils.utils import accuracy
+from argparse import ArgumentParser
+from nni.nas.pytorch.callbacks import ArchitectureCheckpoint, LRSchedulerCallback
+
+
+import random
+
+
 
 
 logger = logging.getLogger('ECG-NAS')
 
-
-
-
-
-
-
-
 if __name__ == "__main__":
     parser = ArgumentParser("darts")
     parser.add_argument("--layers", default=8, type=int)
-    parser.add_argument("--batch-size", default=6, type=int)
+    parser.add_argument("--batch-size", default=7, type=int)
     parser.add_argument("--log-frequency", default=30, type=int)
     parser.add_argument("--epochs", default=50, type=int)
     parser.add_argument("--channels", default=16, type=int)
+    parser.add_argument("--GAN_flag", default=1, type=int)
+    parser.add_argument("--seed", default=100, type=int)
     parser.add_argument("--unrolled", default=False, action="store_true")
     parser.add_argument("--visualization", default=False, action="store_true")
     parser.add_argument("--v1", default=False, action="store_true")
     args = parser.parse_args()
 
     print("args.batch_size=",args.batch_size)
-    dataset_train, dataset_valid = utils.datasets.get_ECG_data()
-    #dataset_train, dataset_valid = datasets.get_dataset("cifar10")
+    GAN_flag = args.GAN_flag
+    seed = args.seed
+    dataset_train, dataset_valid, dataset_test = utils.datasets.get_ECG_data(seed, GAN_flag)
 
-    model = CNN(100, 1, args.channels, 3, args.layers)
+    print("len(dataset_train):",len(dataset_train),"len(dataset_valid):"
+    			,len(dataset_valid),"len(dataset_test):",len(dataset_test))
+
+    model = CNN(100, 1, args.channels, 2, args.layers)
 
     #model=warmup.warmup(model1,dataset_train,dataset_valid)
 
@@ -86,3 +89,4 @@ if __name__ == "__main__":
         final_architecture = trainer.export()
         print('Final architecture:', trainer.export())
         json.dump(trainer.export(), open('checkpoint_1ch_labeled_3class.json', 'w'))
+
