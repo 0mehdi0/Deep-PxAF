@@ -12,11 +12,11 @@ To evaluate the signal processing step:<br />
 ```python
 python signalprocess_1ch.py
 ```
-To search for the best CNN architecture for the processed 2D images:<br />
+To search for the best CNN architecture for the processed 2D images with randomseed 100 and synthetic data:<br />
 ```python
-python search_1ch_3class.py
+python search_1ch_3class.py --seed 100 --GAN_flag" 1
 ```
 To fine-tune the best designed architecture:<br />
 ```python
-python retrain3class.py
+python retrain3class.py --seed 100 --GAN_flag" 1
 ```
