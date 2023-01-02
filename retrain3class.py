@@ -1,37 +1,30 @@
 
-import logging
-from tarfile import LENGTH_NAME
 import time
-from argparse import ArgumentParser
 import torch
-import torch.nn as nn
-from torch.utils.tensorboard import SummaryWriter
-import utils.datasets
-import utils.utils
-from utils.model import CNN
-from nni.nas.pytorch.utils import AverageMeter
-from nni.retiarii import fixed_arch
 import random
-
+import logging
+import utils.utils
+import torch.nn as nn
+import utils.datasets
+from utils.model import CNN
+from tarfile import LENGTH_NAME
+from argparse import ArgumentParser
+from nni.retiarii import fixed_arch
+from torch.utils.tensorboard import SummaryWriter
+from nni.nas.pytorch.utils import AverageMeter
 
 logger = logging.getLogger('ECG-NAS')
-
-
-
 device =torch.device("cuda" if torch.cuda.is_available() else "cpu")
 writer = SummaryWriter()
-
 
 def train(config, train_loader, model, optimizer, criterion, epoch):
     top1 = AverageMeter("top1")
     top5 = AverageMeter("top5")
     losses = AverageMeter("losses")
-
     cur_step = epoch * len(train_loader)
     cur_lr = optimizer.param_groups[0]["lr"]
     logger.info("Epoch %d LR %.6f", epoch, cur_lr)
     writer.add_scalar("lr", cur_lr, global_step=cur_step)
-
     model.train()
 
     for step, (x, y) in enumerate(train_loader):
@@ -47,7 +40,6 @@ def train(config, train_loader, model, optimizer, criterion, epoch):
         # gradient clipping
         nn.utils.clip_grad_norm_(model.parameters(), config.grad_clip)
         optimizer.step()
-
         accuracy = utils.utils.accuracy(logits, y, topk=(1, 2))
         losses.update(loss.item(), bs)
         top1.update(accuracy["acc1"], bs)
@@ -72,17 +64,14 @@ def validate(config, valid_loader, model, criterion, epoch, cur_step):
     top1 = AverageMeter("top1")
     top5 = AverageMeter("top5")
     losses = AverageMeter("losses")
-
     model.eval()
 
     with torch.no_grad():
         for step, (X, y) in enumerate(valid_loader):
             X, y = X.to(device, non_blocking=True), y.to(device, non_blocking=True)
             bs = X.size(0)
-
             logits = model(X)
             loss = criterion(logits, y)
-
             accuracy = utils.utils.accuracy(logits, y, topk=(1, 2))
             losses.update(loss.item(), bs)
             top1.update(accuracy["acc1"], bs)
@@ -103,7 +92,6 @@ def validate(config, valid_loader, model, criterion, epoch, cur_step):
 
     return top1.avg
 
-
 if __name__ == "__main__":
     parser = ArgumentParser("darts")
     parser.add_argument("--layers", default=20, type=int)
@@ -120,8 +108,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     args.batch_size=10
-    print("args.batch_size=",args.batch_size)
-
     GAN_flag = args.GAN_flag
     seed = args.seed
     dataset_train, dataset_valid, dataset_test = utils.datasets.get_ECG_data(seed, GAN_flag)
@@ -132,21 +118,20 @@ if __name__ == "__main__":
     with fixed_arch(args.arc_checkpoint):
         model = CNN(100, 1, 36, 2, args.layers, auxiliary=True)
     criterion = nn.CrossEntropyLoss()
-    print("test1")
     model.to(device)
     criterion.to(device)
-    print("test2")
     optimizer = torch.optim.SGD(model.parameters(), 0.025, momentum=0.9, weight_decay=3.0E-4)
     lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, args.epochs, eta_min=1E-6)
-    print("test3")
     train_loader = torch.utils.data.DataLoader(dataset_train,
                                                batch_size=args.batch_size,
                                                shuffle=True,
+                                               drop_last=True, 
                                                num_workers=args.workers,
                                                pin_memory=True)
     valid_loader = torch.utils.data.DataLoader(dataset_valid,
                                                batch_size=args.batch_size,
                                                shuffle=False,
+                                               drop_last=True,
                                                num_workers=args.workers,
                                                pin_memory=True)
 
@@ -163,7 +148,7 @@ if __name__ == "__main__":
         top1 = validate(args, valid_loader, model, criterion, epoch, cur_step)
         if best_top1<top1:
             EPOCH = epoch
-            PATH = "best_top.pt"
+            PATH = "best_accuracy.pt"
             LOSS = 0.4
             logger.info("Final best Prec@1 = {:.4%}".format(best_top1))
             torch.save({
@@ -176,8 +161,8 @@ if __name__ == "__main__":
         best_top1 = max(best_top1, top1)
         lr_scheduler.step()
 
-    EPOCH = 4
-    PATH = "model_randsearch.pt"
+    EPOCH = args.epochs
+    PATH = "accuracy_last_epoch.pt"
     LOSS = 0.4
     logger.info("Final best Prec@1 = {:.4%}".format(best_top1))
     torch.save({
