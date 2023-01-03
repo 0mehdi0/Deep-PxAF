@@ -1,8 +1,8 @@
 # Pulse2Pulse - DeepFake ECG Generator (Development-repository) 
 
-## Pre-trained DeepFake ECG generator and it's funtionaltities can be found here: - [ECG generator](https://drive.google.com/file/d/1xdoUlkWU7YqtZQmYsdx7CC4CU7tzob8r/view?usp=share_link)
+## Pre-trained DeepFake ECG generator can be found here: - [ECG generator](https://drive.google.com/file/d/1xdoUlkWU7YqtZQmYsdx7CC4CU7tzob8r/view?usp=share_link)
 
-* First download the model and then paste it in 
+* First download the model and then paste it in `GAN/output/test_exp_1/checkpoints`. 
 * Use `Test_models.ipynb` to plot result and save data. 
 
 To train new generator model, we present how to train the Pulse2Pulse generative adversarial network which can generate DeepFake ECGs as discussed in our original paper.
