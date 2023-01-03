@@ -74,6 +74,7 @@ Some of the code in this repository is based on the following amazing works.
 
 
 ## Miscellaneous
+If you use NAS-PxAF in one of your research projects, please cite:
 ```
 @article{X,
   author  = {Mehdi Asadi, Fatemeh Poursalim, Mohammad Loni, Masoud Daneshtalab, Mikael Sj ̈odin
