@@ -2,10 +2,10 @@
 NAS-PxAF
 
 ## Installation
-First, clone the repository  
+First, clone the repository.  
 
 ```pyhton
-git clone https://github.com/Mohammadloni/MetaFire.git && cd MetaFire
+git clone https://github.com/0mehdi0/ECG-NAS.git && cd ECG-NAS
 ```
 Then you need to run GAN model to genrate synthetic ecg data and add them to DARTS or 
 you can download them from here.
@@ -13,24 +13,21 @@ you can download them from here.
 (Selected_GAN.pt): [link](https://drive.google.com/file/d/1j1wuQjeUR02wKyAllhOwo_dE0MjF0Oop/view?usp=sharing) ,  and (GAN_Data.pt): [link](https://drive.google.com/file/d/1-Tz5bikmHLaK8ds2r8D1Uzlw89XMD-pW/view?usp=sharing) 
 <br /> 
 * GAN_Data: 10000 synthetic ecg data was given form our GAN saved model.
-<br />
 * Selected_GAN: selected indexes were chosen by ...
-<br />
 
 After that you should download below files : 
 (dataset_PAF.pkl): [link](https://drive.google.com/file/d/1G5uFIGllmJIk05G1Acp2IItjK159XQhC/view?usp=sharing) ,
 (Selected_PAF.csv): [link](https://drive.google.com/file/d/1vAn5PieATTsYW7TCHYrU38zWtpIPc8R9/view?usp=sharing),(finalindex.pt): [link]()
 <br />
-<br />
 Next, move finalindex.pt, dataset_PAF.pkl, Selected_PAF.csv, GAN_Data.pt, Selected_GAN.pt to the datasets folder.
-<br />
 <br />
 Then, install requirements by running: 
 <br />
-
 ```pyhton
 pip install -r requirements.txt
 ```
+
+
 ## Run the Repository
 
 ### Run the signal processing 
@@ -65,3 +62,13 @@ Some of the code in this repository is based on the following amazing works.
 
 
 ## Miscellaneous
+```
+@article{X,
+  author  = {Mehdi Asadi and Mohammad Loni},
+  title   = {NAS-PxAF: },
+  journal = {},
+  year    = {2023},
+  pages   = {X--X},
+  url     = {X}
+}
+```

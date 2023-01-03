@@ -1,12 +1,21 @@
 # Pulse2Pulse - DeepFake ECG Generator (Development-repository) 
 
-# [Paper](https://doi.org/10.1101/2021.04.27.21256189) |  Pre-generated Data - ([OSF](https://osf.io/6hved/), [Kaggle](https://www.kaggle.com/vlbthambawita/deepfake-ecg))
+## Pre-trained DeepFake ECG generator and it's funtionaltities can be found here: - [ECG generator](https://drive.google.com/file/d/1xdoUlkWU7YqtZQmYsdx7CC4CU7tzob8r/view?usp=share_link)
 
-## Pre-trained DeepFake ECG generator and it's funtionaltities can be found here: - [GitHub (DeepFake ECG)](https://github.com/vlbthambawita/deepfake-ecg)
+* First download the model and then paste it in 
+* Use `Test_models.ipynb` to plot result and save data. 
 
-In this repository, we present how to train the Pulse2Pulse generative adversarial network which can generate DeepFake ECGs as discussed in our original paper. We maintain a seperate GitHub repository for generating random DeepFake ECGs from our pretrained model. 
+To train new generator model, we present how to train the Pulse2Pulse generative adversarial network which can generate DeepFake ECGs as discussed in our original paper.
 
 ## Trainning Pulse2Pulse GAN to generate DeepFake ECGs. 
+## Installation
+First, clone the repository.  
+
+```pyhton
+git clone https://github.com/0mehdi0/ECG-NAS.git && cd ECG-NAS && cd GAN
+```
+
+And then use instraction presented below.
 
 ```python
 # To train (check the pulse2pulse_train.py file for more information)
@@ -31,31 +40,13 @@ python pulse2pulse_train.py retrain --exp_name "test_exp_1" \
 More parameters are in the pulse2pulse_train.py file. For example, output directory, tensorboard directory etc. can be changed in this file. 
 
 ---
-## Citation:
-```latex
+## Contributors
 
-@article{cite-key,
-	author = {Thambawita, Vajira and Isaksen, Jonas L. and Hicks, Steven A. and Ghouse, Jonas and Ahlberg, Gustav and Linneberg, Allan and Grarup, Niels and Ellervik, Christina and Olesen, Morten Salling and Hansen, Torben and Graff, Claus and Holstein-Rathlou, Niels-Henrik and Str{\"u}mke, Inga and Hammer, Hugo L. and Maleckar, Mary M. and Halvorsen, P{\aa}l and Riegler, Michael A. and Kanters, J{\o}rgen K.},
-	da = {2021/11/09},
-	date-added = {2021-11-28 10:10:31 +0530},
-	date-modified = {2021-11-28 10:10:31 +0530},
-	doi = {10.1038/s41598-021-01295-2},
-	id = {Thambawita2021},
-	isbn = {2045-2322},
-	journal = {Scientific Reports},
-	number = {1},
-	pages = {21896},
-	title = {DeepFake electrocardiograms using generative adversarial networks are the beginning of the end for privacy issues in medicine},
-	ty = {JOUR},
-	url = {https://doi.org/10.1038/s41598-021-01295-2},
-	volume = {11},
-	year = {2021},
-	Bdsk-Url-1 = {https://doi.org/10.1038/s41598-021-01295-2}
-}
+* [Mohammad Loni](https://vsehwag.github.io/)
+* [Mehdi Asadi](https://ir.linkedin.com/in/mehdi-asadi-966a1b242?trk=)
+
+The code in this repository is based on the following amazing work.
+
+* https://github.com/vlbthambawita/deepfake-ecg
 
 
-```
-
-
-## Contact us:
-vajira@simula.no | michael@simula.no
