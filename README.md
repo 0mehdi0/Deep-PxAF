@@ -11,15 +11,15 @@ Then you need to run GAN model to genrate synthetic ecg data and add them to DAR
 you can download them from here.
 <br />
 (Selected_GAN.pt): [link](https://drive.google.com/file/d/1j1wuQjeUR02wKyAllhOwo_dE0MjF0Oop/view?usp=sharing) ,  and (GAN_Data.pt): [link](https://drive.google.com/file/d/1-Tz5bikmHLaK8ds2r8D1Uzlw89XMD-pW/view?usp=sharing) 
-<br /> 
-* GAN_Data: 10000 synthetic ecg data was given form our GAN saved model.
-* Selected_GAN: selected indexes were chosen by ...
+
+* `GAN_Data`: 10000 synthetic ecg data was given form our GAN saved model.
+* `Selected_GAN`: selected indexes were chosen by.
 
 After that you should download below files : 
 (dataset_PAF.pkl): [link](https://drive.google.com/file/d/1G5uFIGllmJIk05G1Acp2IItjK159XQhC/view?usp=sharing) ,
 (Selected_PAF.csv): [link](https://drive.google.com/file/d/1vAn5PieATTsYW7TCHYrU38zWtpIPc8R9/view?usp=sharing),(finalindex.pt): [link]()
 <br />
-Next, move finalindex.pt, dataset_PAF.pkl, Selected_PAF.csv, GAN_Data.pt, Selected_GAN.pt to the datasets folder.
+Next, move `finalindex.pt`, `dataset_PAF.pkl`, `Selected_PAF`.csv, `GAN_Data.pt`, `Selected_GAN.pt` to the datasets folder.
 <br />
 Then, install requirements by running: 
 <br />
