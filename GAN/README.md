@@ -1,4 +1,4 @@
-# Pulse2Pulse - DeepFake ECG Generator (Development-repository) 
+# Pulse2Pulse - DeepFake ECG Generator
 
 ## Pre-trained DeepFake ECG generator can be found here: - [ECG generator](https://drive.google.com/file/d/1xdoUlkWU7YqtZQmYsdx7CC4CU7tzob8r/view?usp=share_link)
 
