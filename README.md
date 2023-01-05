@@ -64,7 +64,7 @@ python retrain3class.py --seed 100 --GAN_flag" 1
 
 ## Contributors
 
-* [Mohammad Loni](https://vsehwag.github.io/)
+* [Mohammad Loni](http://www.es.mdh.se/staff/3662-)
 * [Mehdi Asadi](https://ir.linkedin.com/in/mehdi-asadi-966a1b242?trk=)
 
 Some of the code in this repository is based on the following amazing works.
