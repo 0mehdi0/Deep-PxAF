@@ -40,6 +40,13 @@ python pulse2pulse_train.py retrain --exp_name "test_exp_1" \
 More parameters are in the pulse2pulse_train.py file. For example, output directory, tensorboard directory etc. can be changed in this file. 
 
 ---
+
+## Database
+The original database is downloaded from the PhysioNet PAF prediction challenge through the following link: https://physionet.org/content/afpdb/1.0.0/
+
+
+
+
 ## Contributors
 
 * [Mohammad Loni](https://vsehwag.github.io/)
