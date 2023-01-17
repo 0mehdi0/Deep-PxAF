@@ -1,13 +1,13 @@
-# Accurate Detection of Paroxysmal Atrial Fibrillation with Certified GAN-based Data Augmentation and Neural Architecture Search
+# Accurate Detection of Paroxysmal Atrial Fibrillation with Certified-GAN and Neural Architecture Search
 
 This paper presents the results of a novel machine learning method for detecting Paroxysmal
-Atrial Fibrillation (PxAF), a pathological characteristic of Electrocardiogram (ECG) that can lead
+Atrial Fibrillation (Deep-PxAF), a pathological characteristic of Electrocardiogram (ECG) that can lead
 to fatal conditions such as heart attack. To enhance the learning process, this method involves a
 Generative Adversarial Network (GAN) along with a Neural Architecture Search (NAS) in the data
 preparation and classifier optimization phases. 
 
 Following is a snippet of key results.
-![results_table](docs/images/Results.png)
+![results_table](docs/images/Results.jpeg)
 
 ## Installation
 First, clone the repository.  
@@ -72,17 +72,3 @@ Some of the code in this repository is based on the following amazing works.
 * https://github.com/microsoft/nni
 * https://github.com/vlbthambawita/deepfake-ecg
 
-
-## Miscellaneous
-If you use NAS-PxAF in one of your research projects, please cite:
-```
-@article{X,
-  author  = {Mehdi Asadi, Fatemeh Poursalim, Mohammad Loni, Masoud Daneshtalab, Mikael Sj ̈odin
-  , Arash Gharehbaghi},
-  title   = {NAS-PxAF: Accurate Detection of Paroxysmal Atrial Fibrillation with Certified GAN-based Data Augmentation and Neural Architecture Search},
-  journal = {},
-  year    = {2023},
-  pages   = {X--X},
-  url     = {X}
-}
-```
